@@ -21,7 +21,7 @@ package com.dyr.team1.xms.amsw.dao;
  * Description:
  * Version:
  */
-public class BackDAO {
+public class BackDAO extends BaseDAO{
 
 	/**
 	 * @author XuMaoSen

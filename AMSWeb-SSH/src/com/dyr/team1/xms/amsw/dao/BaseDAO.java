@@ -28,6 +28,22 @@ public abstract class BaseDAO {
 	
 	private SessionFactory sessionFactory;
 	
+	/**
+	 * Author XuMaoSen
+	 * @return the sessionFactory
+	 */
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	/**
+	 * Author XuMaoSen
+	 * @param sessionFactory the sessionFactory to set
+	 */
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	public Session getCurrentSession(){
 		return sessionFactory.getCurrentSession();
 	}

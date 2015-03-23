@@ -21,7 +21,7 @@ package com.dyr.team1.xms.amsw.dao;
  * Description:
  * Version:
  */
-public class LendDAO {
+public class LendDAO extends BaseDAO{
 
 	/**
 	 * @author XuMaoSen

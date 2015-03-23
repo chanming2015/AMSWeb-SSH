@@ -24,7 +24,7 @@ import com.dyr.team1.xms.amsw.entity.Operator;
  * Description:
  * Version:
  */
-public class OperatorDAO {
+public class OperatorDAO extends BaseDAO{
 
 	/**
 	 * @author XuMaoSen

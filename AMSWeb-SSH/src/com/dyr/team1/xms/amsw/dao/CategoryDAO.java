@@ -24,7 +24,7 @@ import com.dyr.team1.xms.amsw.entity.Category;
  * Description:
  * Version:
  */
-public class CategoryDAO {
+public class CategoryDAO extends BaseDAO{
 
 	/**
 	 * @author XuMaoSen

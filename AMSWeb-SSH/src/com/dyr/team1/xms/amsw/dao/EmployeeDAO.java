@@ -24,7 +24,7 @@ import com.dyr.team1.xms.amsw.entity.Employee;
  * Description:
  * Version:
  */
-public class EmployeeDAO {
+public class EmployeeDAO extends BaseDAO{
 
 	/**
 	 * @author XuMaoSen

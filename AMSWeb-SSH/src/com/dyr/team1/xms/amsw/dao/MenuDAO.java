@@ -23,7 +23,7 @@ import com.dyr.team1.xms.amsw.entity.Menu;
  * Description:
  * Version:
  */
-public class MenuDAO {
+public class MenuDAO extends BaseDAO{
 
 	/**
 	 * 

@@ -24,7 +24,7 @@ import com.dyr.team1.xms.amsw.entity.RoleMenu;
  * Description:
  * Version:
  */
-public class RoleMenuDAO {
+public class RoleMenuDAO extends BaseDAO{
 
 	/**
 	 * @author XuMaoSen
