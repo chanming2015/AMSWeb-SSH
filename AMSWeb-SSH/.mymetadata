@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="AMSWeb-SSH"
+  id="myeclipse.1423644126371"
+  context-root="/AMSWeb-SSH"
+  j2ee-spec="6.0"
+  archive="AMSWeb-SSH.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<hibernate-mapping package="com.dyr.team1.xms.amsw.entity">
+
+    <class name="Lend">
+    	<!-- 主键映射 -->
+        <id name="id">
+            <generator class="identity"/>
+        </id>
+        <!-- 普通属性映射 -->
+        <property name="lendTime" not-null="true" />
+        <property name="remark" not-null="true" />
+        <!-- 多对一映射 -->
+        <many-to-one name="asset" column="assetId" not-null="true" cascade="save-update"/>
+        <many-to-one name="emp" column="empId" not-null="true" cascade="save-update"/>
+        <many-to-one name="op" column="opId" not-null="true" cascade="save-update"/>
+    </class>
+
+</hibernate-mapping>
