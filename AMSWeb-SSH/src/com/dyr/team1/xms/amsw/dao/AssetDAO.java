@@ -127,8 +127,9 @@ public class AssetDAO extends BaseDAO{
 	 * @param string
 	 * @return
 	 */
-	//@Update("update AssetTable set asset_statue=#{statue} where asset_id=#{id}")
-	public int updateAssetStatue(int id, String statue){
+	public int updateAssetStatue(Integer id, String statue){
+		Asset asset = (Asset) getCurrentSession().get(Asset.class, id);
+		asset.setStatue(statue);
 		return 1;
 	}
 

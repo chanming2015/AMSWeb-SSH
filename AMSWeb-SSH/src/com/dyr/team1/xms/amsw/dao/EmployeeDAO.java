@@ -24,6 +24,7 @@ import com.dyr.team1.xms.amsw.entity.Employee;
  * Description:
  * Version:
  */
+@SuppressWarnings("unchecked")
 public class EmployeeDAO extends BaseDAO{
 
 	/**
@@ -32,9 +33,9 @@ public class EmployeeDAO extends BaseDAO{
 	 * Description
 	 * @return
 	 */
-	//@Select("select * from EmployeeTable")
 	public List<Employee> selectAllEmp(){
-		return null;
+		List<Employee> employees = getCurrentSession().createQuery("from Employee").list();
+		return employees.size()>0?employees:null;
 	}
 	
 	/**
@@ -44,9 +45,9 @@ public class EmployeeDAO extends BaseDAO{
 	 * @param id
 	 * @return
 	 */
-	//@Select("select * from EmployeeTable where employee_id=#{id} ")
-	public Employee selectEmpBy(int id){
-		return null;
+	public Employee selectEmpBy(Integer id){
+		Employee emp = (Employee) getCurrentSession().get(Employee.class, id);
+		return emp==null?null:emp;
 	}
 	
 	/**
@@ -55,9 +56,9 @@ public class EmployeeDAO extends BaseDAO{
 	 * Description
 	 * @return
 	 */
-	//@Select("select MAX(employee_id) from EmployeeTable")
 	public int selectMaxEmpNo(){
-		return 0;
+		Object obj = getCurrentSession().createQuery("select max(e,id) from Employee e").uniqueResult();
+		return (Integer) obj;
 	}
 
 	/**
@@ -67,9 +68,9 @@ public class EmployeeDAO extends BaseDAO{
 	 * @param e
 	 * @return
 	 */
-	//@Insert("insert into EmployeeTable values(#{id},#{name},#{post},#{remark}) ")
 	public int insertEmp(Employee e){
-		return 0;
+		getCurrentSession().save(e);
+		return 1;
 	}
 
 	/**
@@ -79,9 +80,10 @@ public class EmployeeDAO extends BaseDAO{
 	 * @param id
 	 * @return
 	 */
-	//@Delete("delete from EmployeeTable where employee_id=#{id} ")
-	public int deleteEmp(int id){
-		return 0;
+	public int deleteEmp(Integer id){
+		Employee emp = (Employee) getCurrentSession().get(Employee.class, id);
+		getCurrentSession().delete(emp);
+		return 1;
 	}
 
 	/**
@@ -91,9 +93,12 @@ public class EmployeeDAO extends BaseDAO{
 	 * @param e
 	 * @return
 	 */
-	//@Update("update EmployeeTable set employee_name=#{name},employee_post=#{post},employee_remark=#{remark} where employee_id=#{id} ")
 	public int updateEmp(Employee e){
-		return 0;
+		Employee emp = (Employee) getCurrentSession().get(Employee.class, e.getId());
+		emp.setName(e.getName());
+		emp.setPost(e.getPost());
+		emp.setRemark(e.getRemark());
+		return 1;
 	}
 
 }

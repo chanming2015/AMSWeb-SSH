@@ -34,23 +34,39 @@ public class AdminOpAction extends BaseAction{
 	private String newPass1;
 	private String newPass2;
 	private Operator op;
-	private int assetId;
-	private int empId;
+	private Integer assetId;
+	private Integer empId;
 	private String remark;
 	
-	public int getAssetId() {
+	/**
+	 * Author XuMaoSen
+	 * @return the assetId
+	 */
+	public Integer getAssetId() {
 		return assetId;
 	}
 
-	public void setAssetId(int assetId) {
+	/**
+	 * Author XuMaoSen
+	 * @param assetId the assetId to set
+	 */
+	public void setAssetId(Integer assetId) {
 		this.assetId = assetId;
 	}
 
-	public int getEmpId() {
+	/**
+	 * Author XuMaoSen
+	 * @return the empId
+	 */
+	public Integer getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(int empId) {
+	/**
+	 * Author XuMaoSen
+	 * @param empId the empId to set
+	 */
+	public void setEmpId(Integer empId) {
 		this.empId = empId;
 	}
 
@@ -161,7 +177,7 @@ public class AdminOpAction extends BaseAction{
 		int rows=0;
 		op=(Operator) session.get("admin");
 		if(op.getPassword().equals(oldPass)){
-			rows=operatorService.modifyPass(op.getUserName(),newPass1);
+			rows=operatorService.modifyPass(op.getId(),newPass1);
 		}
 		if(rows == 1){
 			return "doModifyPass_success";
@@ -236,7 +252,7 @@ public class AdminOpAction extends BaseAction{
 
 	public String doLendAsset(){
 		op=(Operator) session.get("admin");
-		int rows = operatorService.addLendInfo(assetId,empId,remark,op.getUserName());
+		int rows = operatorService.addLendInfo(assetId,empId,remark,op);
 		if(rows==1){
 			return "doLendAsset_success";
 		}else {

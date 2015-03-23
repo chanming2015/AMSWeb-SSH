@@ -7,6 +7,9 @@
  */
 package com.dyr.team1.xms.amsw.dao;
 
+import com.dyr.team1.xms.amsw.entity.Asset;
+import com.dyr.team1.xms.amsw.entity.Back;
+
 /**
  * Project:AssetManagementSystemWeb
  * Package:com.dyr.team1.xms.amsw.dao
@@ -31,8 +34,12 @@ public class BackDAO extends BaseDAO{
 	 * @param remark
 	 * @return
 	 */
-	//@Insert("insert into BackTable values(#{id},default,#{remark}) ")
-	public int insertBackInfo(int id, String remark){
+	public int insertBackInfo(Integer id, String remark){
+		Asset asset = (Asset) getCurrentSession().get(Asset.class, id);
+		Back back = new Back();
+		back.setAsset(asset);
+		asset.getBacks().add(back);
+		getCurrentSession().save(back);
 		return 1;
 	}
 

@@ -27,7 +27,7 @@ import java.io.UnsupportedEncodingException;
 public class AdminCateAction extends BaseAction{
 	
 	private String smallCate;
-	private String bigCateSelect;
+	private Integer bigCateSelect;
 	private String bigCate;
 	private String oldName;
 	private String newName;
@@ -56,14 +56,22 @@ public class AdminCateAction extends BaseAction{
 		this.smallCate = smallCate;
 	}
 	
-	public String getBigCateSelect() {
+	/**
+	 * Author XuMaoSen
+	 * @return the bigCateSelect
+	 */
+	public Integer getBigCateSelect() {
 		return bigCateSelect;
 	}
-	
-	public void setBigCateSelect(String bigCateSelect) {
+
+	/**
+	 * Author XuMaoSen
+	 * @param bigCateSelect the bigCateSelect to set
+	 */
+	public void setBigCateSelect(Integer bigCateSelect) {
 		this.bigCateSelect = bigCateSelect;
 	}
-	
+
 	public String getBigCate() {
 		return bigCate;
 	}

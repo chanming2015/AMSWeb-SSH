@@ -8,6 +8,8 @@
 package com.dyr.team1.xms.amsw.dao;
 
 import java.util.List;
+
+import com.dyr.team1.xms.amsw.entity.Role;
 import com.dyr.team1.xms.amsw.entity.RoleMenu;
 
 /**
@@ -24,6 +26,7 @@ import com.dyr.team1.xms.amsw.entity.RoleMenu;
  * Description:
  * Version:
  */
+@SuppressWarnings("unchecked")
 public class RoleMenuDAO extends BaseDAO{
 
 	/**
@@ -33,9 +36,9 @@ public class RoleMenuDAO extends BaseDAO{
 	 * @param id
 	 * @return
 	 */
-	public //@Select("select * from RoleMenuTable where roleMenu_role=#{name} ")
-	List<RoleMenu> selectRoleMenuListByRoleId(Integer id){
-		return null;
+	public List<RoleMenu> selectRoleMenuListByRoleId(Integer id){
+		List<RoleMenu> roleMenus = getCurrentSession().createQuery("from RoleMenu rm where rm.role.id=?").list();
+		return roleMenus.size()>0?roleMenus:null;
 	}
 
 	/**
@@ -44,9 +47,9 @@ public class RoleMenuDAO extends BaseDAO{
 	 * Description
 	 * @return
 	 */
-	//@Select("select *from RoleTable")
-	public List<String> selectAllRole(){
-		return null;
+	public List<Role> selectAllRole(){
+		List<Role> roles = getCurrentSession().createQuery("from Role").list();
+		return roles.size()>0?roles:null;
 	}
 
 }

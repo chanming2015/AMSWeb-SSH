@@ -24,6 +24,7 @@ import com.dyr.team1.xms.amsw.entity.Operator;
  * Description:
  * Version:
  */
+@SuppressWarnings("unchecked")
 public class OperatorDAO extends BaseDAO{
 
 	/**
@@ -34,9 +35,11 @@ public class OperatorDAO extends BaseDAO{
 	 * @param password
 	 * @return
 	 */
-	public //@Select("select * from OperatorTable where operator_username=#{name} and operator_password=#{password} ")
-	Operator selectOpByNameAndPass(String name, String password){
-		return null;
+	public Operator selectOpByNameAndPass(String name, String password){
+		Object obj = null;
+		obj = getCurrentSession().createQuery("from Operator op where op.username=? and password=?")
+											.setString(0, name).setString(1, password).uniqueResult();
+		return obj==null?null:(Operator)obj;
 	}
 	
 	/**
@@ -45,9 +48,10 @@ public class OperatorDAO extends BaseDAO{
 	 * Description
 	 * @return
 	 */
-	public //@Select("select * from OperatorTable ")
-	List<Operator> selectAllOp(){
-		return null;
+	public List<Operator> selectAllOp(){
+		List<Operator> operators =null;
+		operators = getCurrentSession().createQuery("from Operator").list();
+		return operators.size()>0?operators:null;
 	}
 
 	/**
@@ -58,9 +62,10 @@ public class OperatorDAO extends BaseDAO{
 	 * @param newPass2 
 	 * @return
 	 */
-	//@Update("update OperatorTable set operator_password=#{newPass} where operator_username=#{name} ")
-	public int updatePass(String name, String newPass){
-		return 0;
+	public int updatePass(Integer id, String newPass){
+		Operator op = (Operator) getCurrentSession().get(Operator.class, id);
+		op.setPassword(newPass);
+		return 1;
 	}
 
 	/**
@@ -70,9 +75,9 @@ public class OperatorDAO extends BaseDAO{
 	 * @param op
 	 * @return
 	 */
-	//@Insert("insert into OperatorTable values(#{userName},#{password},#{used},#{role} )")
 	public int insertOp(Operator op){
-		return 0;
+		getCurrentSession().save(op);
+		return 1;
 	}
 
 }

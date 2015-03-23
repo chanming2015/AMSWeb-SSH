@@ -7,6 +7,11 @@
  */
 package com.dyr.team1.xms.amsw.dao;
 
+import com.dyr.team1.xms.amsw.entity.Asset;
+import com.dyr.team1.xms.amsw.entity.Employee;
+import com.dyr.team1.xms.amsw.entity.Lend;
+import com.dyr.team1.xms.amsw.entity.Operator;
+
 /**
  * Project:AssetManagementSystemWeb
  * Package:com.dyr.team1.xms.amsw.dao
@@ -30,12 +35,21 @@ public class LendDAO extends BaseDAO{
 	 * @param assetId
 	 * @param empId
 	 * @param remark
-	 * @param name 
+	 * @param op 
 	 * @return
 	 */
-	//@Insert("insert into LendTable values(#{assetId},#{empId},default,#{name},#{remark}) ")
-	public int insertLendInfo(int assetId, int empId, String remark, String name){
-		return 0;
+	public int insertLendInfo(Integer assetId, Integer empId, String remark, Operator op){
+		Asset asset = (Asset) getCurrentSession().get(Asset.class, assetId);
+		Employee employee = (Employee) getCurrentSession().get(Employee.class, empId);
+		Lend lend = new Lend();
+		lend.setAsset(asset);
+		asset.getLends().add(lend);
+		lend.setEmp(employee);
+		employee.getLends().add(lend);
+		lend.setOp(op);
+		op.getLends().add(lend);
+		getCurrentSession().save(lend);
+		return 1;
 	}
 
 }

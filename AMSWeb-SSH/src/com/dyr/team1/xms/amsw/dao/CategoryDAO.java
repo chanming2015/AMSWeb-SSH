@@ -24,6 +24,7 @@ import com.dyr.team1.xms.amsw.entity.Category;
  * Description:
  * Version:
  */
+@SuppressWarnings("unchecked")
 public class CategoryDAO extends BaseDAO{
 
 	/**
@@ -32,9 +33,9 @@ public class CategoryDAO extends BaseDAO{
 	 * Description
 	 * @return
 	 */
-	public //@Select("select * from CategoryTable")
-	List<Category> selectAllCate(){
-		return null;
+	public List<Category> selectAllCate(){
+		List<Category> categories = getCurrentSession().createQuery("from Category").list();
+		return categories.size()>0?categories:null;
 	}
 	
 	/**
@@ -57,9 +58,11 @@ public class CategoryDAO extends BaseDAO{
 	 * @param bigCate
 	 * @return
 	 */
-	//@Insert("insert into CategoryTable values(#{name},'根种类') ")
 	public int insertBigCate(String name){
-		return 0;
+		Category category = new Category();
+		category.setName(name);
+		getCurrentSession().save(category);
+		return 1;
 	}
 
 	/**
@@ -70,8 +73,13 @@ public class CategoryDAO extends BaseDAO{
 	 * @param bigCateSelect
 	 * @return
 	 */
-	//@Insert("insert into CategoryTable values(#{small},#{big}) ")
-	public int addSmallCate(String small, String big){
+	public int addSmallCate(String small, Integer bigCateSelect){
+		Category bc = (Category) getCurrentSession().get(Category.class, bigCateSelect);
+		Category sc = new Category();
+		sc.setName(small);
+		sc.setSuperCate(bc);
+		bc.getCategories().add(sc);
+		getCurrentSession().save(bc);
 		return 0;
 	}
 

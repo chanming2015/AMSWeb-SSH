@@ -27,13 +27,21 @@ import com.dyr.team1.xms.amsw.entity.Employee;
 public class AdminEmpAction extends BaseAction{
 	
 	private Employee e;
-	private int id;
+	private Integer id;
 
-	public int getId() {
+	/**
+	 * Author XuMaoSen
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	/**
+	 * Author XuMaoSen
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

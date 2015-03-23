@@ -16,6 +16,7 @@ import com.dyr.team1.xms.amsw.entity.Asset;
 import com.dyr.team1.xms.amsw.entity.Category;
 import com.dyr.team1.xms.amsw.entity.Employee;
 import com.dyr.team1.xms.amsw.entity.Operator;
+import com.dyr.team1.xms.amsw.entity.Role;
 import com.dyr.team1.xms.amsw.service.OperatorService;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -127,7 +128,7 @@ public class BaseAction extends ActionSupport implements RequestAware,SessionAwa
 	protected void putAllRoleIntoReq() {
 		
 		//得到所有角色
-		List<String> roleList=operatorService.getAllRole();
+		List<Role> roleList=operatorService.getAllRole();
 		requset.put("roleList", roleList);
 	}
 }

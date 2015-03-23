@@ -108,25 +108,20 @@
 	</bean>
 
 	<!-- 控制器 -->
-	<bean id="baseAction" class="com.dyr.team1.xms.amsw.web.BaseAction"
-		scope="prototype">
+	<bean id="baseAction" class="com.dyr.team1.xms.amsw.web.BaseAction"	scope="prototype">
 		<property name="operatorService" ref="operatorService"></property>
 	</bean>
 
-	<bean id="adminOpAction" class="com.dyr.team1.xms.amsw.web.AdminOpAction"
-		parent="baseAction" lazy-init="true" scope="prototype">
+	<bean id="adminOpAction" class="com.dyr.team1.xms.amsw.web.AdminOpAction" parent="baseAction" lazy-init="true" scope="prototype">
 	</bean>
 
-	<bean id="adminCateAction" class="com.dyr.team1.xms.amsw.web.AdminCateAction"
-		parent="baseAction" lazy-init="true" scope="prototype">
+	<bean id="adminCateAction" class="com.dyr.team1.xms.amsw.web.AdminCateAction" parent="baseAction" lazy-init="true" scope="prototype">
 	</bean>
 
-	<bean id="adminAssetAction" class="com.dyr.team1.xms.amsw.web.AdminAssetAction"
-		parent="baseAction" lazy-init="true" scope="prototype">
+	<bean id="adminAssetAction" class="com.dyr.team1.xms.amsw.web.AdminAssetAction"	parent="baseAction" lazy-init="true" scope="prototype">
 	</bean>
 
-	<bean id="adminEmpAction" class="com.dyr.team1.xms.amsw.web.AdminEmpAction"
-		parent="baseAction" lazy-init="true" scope="prototype">
+	<bean id="adminEmpAction" class="com.dyr.team1.xms.amsw.web.AdminEmpAction"	parent="baseAction" lazy-init="true" scope="prototype">
 	</bean>
 
 </beans>

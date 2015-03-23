@@ -20,6 +20,7 @@ import com.dyr.team1.xms.amsw.entity.Asset;
 import com.dyr.team1.xms.amsw.entity.Category;
 import com.dyr.team1.xms.amsw.entity.Employee;
 import com.dyr.team1.xms.amsw.entity.Operator;
+import com.dyr.team1.xms.amsw.entity.Role;
 import com.dyr.team1.xms.amsw.entity.RoleMenu;
 
 /**
@@ -165,7 +166,7 @@ public class OperatorService {
 	 * @param bigCateSelect
 	 * @return
 	 */
-	public int addSmallCate(String smallCate, String bigCateSelect) {
+	public int addSmallCate(String smallCate, Integer bigCateSelect) {
 		return categoryDAO.addSmallCate(smallCate,bigCateSelect);
 	}
 
@@ -313,7 +314,7 @@ public class OperatorService {
 	 * @param id
 	 * @return
 	 */
-	public int removeEmp(int id) {
+	public int removeEmp(Integer id) {
 		return employeeDAO.deleteEmp(id);
 	}
 
@@ -324,7 +325,7 @@ public class OperatorService {
 	 * @param id
 	 * @return
 	 */
-	public Employee getEmpById(int id) {
+	public Employee getEmpById(Integer id) {
 		return employeeDAO.selectEmpBy(id);
 	}
 
@@ -347,8 +348,8 @@ public class OperatorService {
 	 * @param oldPass
 	 * @return
 	 */
-	public int modifyPass(String name, String newPass) {
-		return operatorDAO.updatePass(name,newPass);
+	public int modifyPass(Integer id, String newPass) {
+		return operatorDAO.updatePass(id,newPass);
 	}
 
 	/**
@@ -357,7 +358,7 @@ public class OperatorService {
 	 * Description
 	 * @return
 	 */
-	public List<String> getAllRole() {
+	public List<Role> getAllRole() {
 		return roleMenuDAO.selectAllRole();
 	}
 
@@ -382,9 +383,9 @@ public class OperatorService {
 	 * @param string 
 	 * @return
 	 */
-	public int addLendInfo(int assetId, int empId, String remark, String name) {
+	public int addLendInfo(Integer assetId, Integer empId, String remark, Operator op) {
 		
-		if(lendDAO.insertLendInfo(assetId,empId,remark,name)==1){
+		if(lendDAO.insertLendInfo(assetId,empId,remark,op)==1){
 			if(assetDAO.updateAssetStatue(assetId,"待归还")==1){
 				return 1;
 			}
@@ -400,7 +401,7 @@ public class OperatorService {
 	 * @param remark
 	 * @return
 	 */
-	public int addBackInfo(int assetId, String remark) {
+	public int addBackInfo(Integer assetId, String remark) {
 		
 		if(backDAO.insertBackInfo(assetId,remark)==1){
 			if(assetDAO.updateAssetStatue(assetId,"可借出")==1){
