@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 配置了一个c3p0数据库连接池 -->
+	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="jdbcUrl" value="jdbc:sqlserver://127.0.0.1:1433;database=ASSETDB" />
+		<property name="user" value="sa" />
+		<property name="password" value="123456" />
+	</bean>
+
+	<!-- Hibernate的SessionFactory类 -->
+	<bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="mappingLocations">
+			<value>classpath:com/dyr/team1/xms/amsw/entity/*.hbm.xml</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.c3p0.min_size">5</prop>
+				<prop key="hibernate.c3p0.max_size">10</prop>
+				<prop key="hibernate.c3p0.timeout">1800</prop>
+				<prop key="hibernate.c3p0.max_statements">50</prop>
+				<!-- <prop key="current_session_context_class">thread</prop> -->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 数据访问层 -->
+	<bean id="baseDAO" class="com.dyr.team1.xms.amsw.dao.BaseDAO" abstract="true">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="assetDAO" class="com.dyr.team1.xms.amsw.dao.AssetDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="backDAO" class="com.dyr.team1.xms.amsw.dao.BackDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="categoryDAO" class="com.dyr.team1.xms.amsw.dao.CategoryDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="employeeDAO" class="com.dyr.team1.xms.amsw.dao.EmployeeDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="lendDAO" class="com.dyr.team1.xms.amsw.dao.LendDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="menuDAO" class="com.dyr.team1.xms.amsw.dao.MenuDAO" parent="baseDAO">
+	</bean>
+
+	<bean id="operatorDAO" class="com.dyr.team1.xms.amsw.dao.OperatorDAO" parent="baseDAO"> 
+	</bean>
+
+	<bean id="roleMenuDAO" class="com.dyr.team1.xms.amsw.dao.RoleMenuDAO" parent="baseDAO">
+	</bean>
+
+	<!-- similarly, don't forget the PlatformTransactionManager -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="myDataSource" />
+	</bean>
+
+	<!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean 
+		below) -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<!-- all methods starting with 'get' are read-only -->
+			<tx:method name="get*" read-only="true" />
+			<!-- other methods use the REQUIRED transaction settings (see below) -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- ensure that the above transactional advice runs for any execution of 
+		an operation defined by the FooService interface -->
+	<aop:config>
+		<aop:pointcut id="allService"
+			expression="execution(* com.dyr.team1.xms.amsw.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allService" />
+	</aop:config>
+
+	<!-- 业务层 -->
+	<bean id="operatorService" class="com.dyr.team1.xms.amsw.service.OperatorService">
+		<property name="operatorDAO" ref="operatorDAO"></property>
+		<property name="roleMenuDAO" ref="roleMenuDAO"></property>
+		<property name="categoryDAO" ref="categoryDAO"></property>
+		<property name="assetDAO" ref="assetDAO"></property>
+		<property name="employeeDAO" ref="employeeDAO"></property>
+		<property name="lendDAO" ref="lendDAO"></property>
+		<property name="backDAO" ref="backDAO"></property>
+	</bean>
+
+	<!-- 控制器 -->
+	<bean id="baseAction" class="com.dyr.team1.xms.amsw.web.BaseAction"	scope="prototype">
+		<property name="operatorService" ref="operatorService"></property>
+	</bean>
+
+	<bean id="adminOpAction" class="com.dyr.team1.xms.amsw.web.AdminOpAction" parent="baseAction" lazy-init="true" scope="prototype">
+	</bean>
+
+	<bean id="adminCateAction" class="com.dyr.team1.xms.amsw.web.AdminCateAction" parent="baseAction" lazy-init="true" scope="prototype">
+	</bean>
+
+	<bean id="adminAssetAction" class="com.dyr.team1.xms.amsw.web.AdminAssetAction"	parent="baseAction" lazy-init="true" scope="prototype">
+	</bean>
+
+	<bean id="adminEmpAction" class="com.dyr.team1.xms.amsw.web.AdminEmpAction"	parent="baseAction" lazy-init="true" scope="prototype">
+	</bean>
+
+</beans>

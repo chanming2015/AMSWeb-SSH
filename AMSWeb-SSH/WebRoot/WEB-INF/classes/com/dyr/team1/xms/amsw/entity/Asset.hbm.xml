@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<hibernate-mapping package="com.dyr.team1.xms.amsw.entity">
+
+    <class name="Asset">
+    	<!-- 主键映射 -->
+        <id name="id">
+            <generator class="identity"/>
+        </id>
+        <!-- 普通属性映射 -->
+        <property name="name" not-null="true" />
+        <property name="price" not-null="true" />
+        <property name="buyTime" not-null="true" />
+        <property name="remark" not-null="true" />
+        <property name="statue" not-null="true" />
+        <!-- 多对一映射 -->
+        <many-to-one name="cate" column="cateId" not-null="true" cascade="save-update"/>
+        <!-- 一对多映射 -->
+        <set name="backs"> 
+        	<key column="id"/>
+        	<one-to-many class="Back"/>
+        </set>
+        <set name="lends"> 
+        	<key column="id"/>
+        	<one-to-many class="Lend"/>
+        </set>
+    </class>
+
+</hibernate-mapping>
